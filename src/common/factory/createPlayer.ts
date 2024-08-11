@@ -32,14 +32,10 @@ export const createPlayer = async ({ client, executionId }: CreatePlayerParams):
 
         // Testing out new youtube extractor
         await player.extractors.register(YoutubeiExtractor, {
-            authentication: process.env.YT_EXTRACTOR_AUTH || ''
-            /*
-            rotator: {
-                rotationStrategy: "shard",
-                authentications: getAuthArrayFromEnv() || [""],
-                currentShard: client.shard?.ids[0] || 0,
-            },
-            */
+            authentication: process.env.YT_EXTRACTOR_AUTH || '',
+            streamOptions: {
+                highWaterMark: 2 * 1_024 * 1_024 // 2MB, default is 512 KB (512 * 1_024)
+            }
         });
 
         // make player accessible from anywhere in the application
